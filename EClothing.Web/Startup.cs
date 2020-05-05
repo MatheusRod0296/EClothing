@@ -35,7 +35,7 @@ namespace EClothing.Web
                 options.UseSqlServer(
                     Configuration.GetConnectionString("ConnectionStringDocker")));
 
-                    services.AddAuthentication(options =>
+            services.AddAuthentication(options =>
             {
                 options.DefaultScheme = CookieAuthenticationDefaults.AuthenticationScheme;
                 options.DefaultChallengeScheme = OpenIdConnectDefaults.AuthenticationScheme;
@@ -43,7 +43,8 @@ namespace EClothing.Web
                 .AddCookie(CookieAuthenticationDefaults.AuthenticationScheme)
                 .AddOpenIdConnect(OpenIdConnectDefaults.AuthenticationScheme, options =>
                 {
-                    options.Authority = "http://localhost:5000";
+                    options.Authority = "http://localhost:5001";
+                    // options.Authority = "http://localhost:5000";
                     options.RequireHttpsMetadata = false;
                     options.ClientId = "mvc";
                     options.SaveTokens = true;
@@ -85,6 +86,13 @@ namespace EClothing.Web
                 endpoints.MapDefaultControllerRoute()
                     .RequireAuthorization();
             });
+
+            //  app.UseEndpoints(endpoints =>
+            // {
+            //     endpoints.MapControllerRoute(
+            //         name: "default",
+            //         pattern: "{controller=Home}/{action=Index}/{id?}");
+            // });
         }
     }
 }

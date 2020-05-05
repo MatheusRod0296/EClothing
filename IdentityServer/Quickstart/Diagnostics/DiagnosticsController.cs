@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
+
 namespace IdentityServer.Quickstart.Diagnostics
 {
     [SecurityHeaders]
@@ -21,7 +22,7 @@ namespace IdentityServer.Quickstart.Diagnostics
             {
                 return NotFound();
             }
-
+            var x = User.Claims;
             var model = new DiagnosticsViewModel(await HttpContext.AuthenticateAsync());
             return View(model);
         }

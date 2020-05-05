@@ -33,8 +33,8 @@ namespace IdentityServer
                     AllowedGrantTypes = GrantTypes.Code,
                     RequireConsent = false,
 
-                    RedirectUris = { "https://localhost:5003/signin-oidc"  },
-                    PostLogoutRedirectUris = { "https://localhost:5003/signout-callback-oidc" },
+                    RedirectUris = { "https://localhost:5004/signin-oidc"  },
+                    PostLogoutRedirectUris = { "https://localhost:5004/signout-callback-oidc" },
                     ClientSecrets = {new Secret("super-secret".ToSha256(),"mvc-secret") },
                     AllowedScopes =
                     {
@@ -66,7 +66,8 @@ namespace IdentityServer
                         new Claim(JwtClaimTypes.Email, "bhdebrito@gmail.com"),
                         new Claim(JwtClaimTypes.EmailVerified, "true", ClaimValueTypes.Boolean),
                         new Claim(JwtClaimTypes.WebSite, "http://www.saindodacaixinha.com.br"),
-                        new Claim(JwtClaimTypes.Address, @"{ 'street_address': 'Av Paulista', 'locality': 'Sao Paulo', 'postal_code': 0332303, 'country': 'Brazil' }", IdentityServer4.IdentityServerConstants.ClaimValueTypes.Json)
+                        new Claim(JwtClaimTypes.Address, @"{ 'street_address': 'Av Paulista', 'locality': 'Sao Paulo', 'postal_code': 0332303, 'country': 'Brazil' }", IdentityServer4.IdentityServerConstants.ClaimValueTypes.Json),
+                        new Claim(ClaimTypes.Role, "admin")
 
                     }
                 },
@@ -86,6 +87,7 @@ namespace IdentityServer
                         new Claim(JwtClaimTypes.WebSite, "http://globo.com"),
                         new Claim(JwtClaimTypes.Address, @"{ 'street_address': 'Rua da Consolacao', 'locality': 'Sao Paulo', 'postal_code': 02565333, 'country': 'Brasil' }", IdentityServer4.IdentityServerConstants.ClaimValueTypes.Json),
                         new Claim("location", "Brazil")
+                    
                     }
                 }
             };

@@ -17,6 +17,15 @@ namespace IdentityServer
                 .AddInMemoryIdentityResources(Config.GetIdentityResources())
                 .AddInMemoryClients(Config.GetClients())
                 .AddTestUsers(Config.GetUsers());
+
+            // services.AddAuthentication()
+            //             .AddGoogle("Google", options =>
+            //             {
+            //                 options.SignInScheme = IdentityServerConstants.ExternalCookieAuthenticationScheme;
+
+            //                 options.ClientId = "...";
+            //                 options.ClientSecret = "...";
+            //             });
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)

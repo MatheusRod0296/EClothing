@@ -8,7 +8,11 @@ namespace EClothing.Infra.SharedContext.Mapping
     {
         public void Configure(EntityTypeBuilder<Product> builder)
         {
+           builder.Property(p => p.Name)
+           .IsRequired();
            
+
+
         }
     }
 }

@@ -1,0 +1,64 @@
+{
+  "format": 1,
+  "restore": {
+    "/home/matheus/Projects/EClothing/EClothing.Domain/EClothing.Domain.csproj": {}
+  },
+  "projects": {
+    "/home/matheus/Projects/EClothing/EClothing.Domain/EClothing.Domain.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "/home/matheus/Projects/EClothing/EClothing.Domain/EClothing.Domain.csproj",
+        "projectName": "EClothing.Domain",
+        "projectPath": "/home/matheus/Projects/EClothing/EClothing.Domain/EClothing.Domain.csproj",
+        "packagesPath": "/home/matheus/.nuget/packages/",
+        "outputPath": "/home/matheus/Projects/EClothing/EClothing.Domain/obj/",
+        "projectStyle": "PackageReference",
+        "fallbackFolders": [
+          "/usr/share/dotnet/sdk/NuGetFallbackFolder"
+        ],
+        "configFilePaths": [
+          "/home/matheus/.nuget/NuGet/NuGet.Config"
+        ],
+        "originalTargetFrameworks": [
+          "netstandard2.0"
+        ],
+        "sources": {
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "netstandard2.0": {
+            "projectReferences": {}
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        }
+      },
+      "frameworks": {
+        "netstandard2.0": {
+          "dependencies": {
+            "NETStandard.Library": {
+              "suppressParent": "All",
+              "target": "Package",
+              "version": "[2.0.3, )",
+              "autoReferenced": true
+            }
+          },
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "runtimeIdentifierGraphPath": "/usr/share/dotnet/sdk/3.1.101/RuntimeIdentifierGraph.json"
+        }
+      }
+    }
+  }
+}

@@ -2,17 +2,20 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using EClothing.Domain.SharedContext.Entities;
-using EClothing.Domain.SharedContext.Repository;
-using EClothing.Infra;
-using EClothing.Infra.SharedContext.Repositories;
 using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Identity;
+
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.EntityFrameworkCore;
+
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using EClothing.Infra;
+using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Authentication.OpenIdConnect;
+using Microsoft.IdentityModel.Protocols.OpenIdConnect;
 
 namespace EClothing.Web
 {
@@ -28,14 +31,31 @@ namespace EClothing.Web
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddControllersWithViews();
-            
+            services.AddDbContext<EClothingContext>(options =>
+                options.UseSqlServer(
+                    Configuration.GetConnectionString("ConnectionStringDocker")));
 
-            //services.AddDbContext<EClothingContext>(x => x.UseInMemoryDatabase("EClothingDb"));
-            services.AddDbContext<EClothingContext>(x => x.UseSqlServer(Configuration.GetConnectionString("ConnectionString")));
+                    services.AddAuthentication(options =>
+            {
+                options.DefaultScheme = CookieAuthenticationDefaults.AuthenticationScheme;
+                options.DefaultChallengeScheme = OpenIdConnectDefaults.AuthenticationScheme;
+            })
+                .AddCookie(CookieAuthenticationDefaults.AuthenticationScheme)
+                .AddOpenIdConnect(OpenIdConnectDefaults.AuthenticationScheme, options =>
+                {
+                    options.Authority = "http://localhost:5000";
+                    options.RequireHttpsMetadata = false;
+                    options.ClientId = "mvc";
+                    options.SaveTokens = true;
+                    options.ClientSecret = "super-secret";
+                    options.ResponseType = OpenIdConnectResponseType.Code;
+                    options.Scope.Add("openid");
+                    options.Scope.Add("profile");
+                });
+            services.AddAuthorization();
 
-            //exemplo DI
-            services.AddScoped<IRepositoryGeneric<Product, int>, ProductRepository>();
+           
+           services.AddRazorPages();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -44,6 +64,7 @@ namespace EClothing.Web
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
+                app.UseDatabaseErrorPage();
             }
             else
             {
@@ -56,13 +77,13 @@ namespace EClothing.Web
 
             app.UseRouting();
 
+            app.UseAuthentication();
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>
             {
-                endpoints.MapControllerRoute(
-                    name: "default",
-                    pattern: "{controller=Home}/{action=Index}/{id?}");
+                endpoints.MapDefaultControllerRoute()
+                    .RequireAuthorization();
             });
         }
     }

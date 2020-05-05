@@ -15,6 +15,7 @@ namespace EClothing.Infra
 
         protected override void OnModelCreating(ModelBuilder modelBuilder){ 
             modelBuilder.ApplyConfiguration(new ProductSizeMap());
+            modelBuilder.ApplyConfiguration(new ProductMap());
 
         }
         

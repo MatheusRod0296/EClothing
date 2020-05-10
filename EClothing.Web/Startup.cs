@@ -35,28 +35,52 @@ namespace EClothing.Web
                 options.UseSqlServer(
                     Configuration.GetConnectionString("ConnectionStringDocker")));
 
+            // services.AddAuthentication(options =>
+            // {
+            //     options.DefaultScheme = CookieAuthenticationDefaults.AuthenticationScheme;
+            //     options.DefaultChallengeScheme = OpenIdConnectDefaults.AuthenticationScheme;
+
+            // })
+            // .AddCookie(CookieAuthenticationDefaults.AuthenticationScheme)
+            // .AddOpenIdConnect(OpenIdConnectDefaults.AuthenticationScheme, options =>
+            //     {
+
+            //         options.Authority = "http://localhost:5001";
+
+            //         //habilita o uso do http // sem httpS
+            //         options.RequireHttpsMetadata = false;
+            //         options.ClientId = "mvc";
+            //         options.SaveTokens = true;
+            //         options.ClientSecret = "super-secret";
+            //         options.ResponseType = OpenIdConnectResponseType.Code;
+            //         options.Scope.Add("openid");
+            //         options.Scope.Add("profile");
+            //     });
+
+
             services.AddAuthentication(options =>
             {
-                options.DefaultScheme = CookieAuthenticationDefaults.AuthenticationScheme;
-                options.DefaultChallengeScheme = OpenIdConnectDefaults.AuthenticationScheme;
+                options.DefaultScheme = "Cookies";
+                options.DefaultChallengeScheme = "oidc";
+               
             })
-                .AddCookie(CookieAuthenticationDefaults.AuthenticationScheme)
-                .AddOpenIdConnect(OpenIdConnectDefaults.AuthenticationScheme, options =>
-                {
-                    options.Authority = "http://localhost:5001";
-                    // options.Authority = "http://localhost:5000";
-                    options.RequireHttpsMetadata = false;
-                    options.ClientId = "mvc";
-                    options.SaveTokens = true;
-                    options.ClientSecret = "super-secret";
-                    options.ResponseType = OpenIdConnectResponseType.Code;
-                    options.Scope.Add("openid");
-                    options.Scope.Add("profile");
-                });
+            .AddCookie("Cookies")
+            .AddOpenIdConnect("oidc", options =>
+            {
+                options.SignInScheme = "Cookies";
+                options.RequireHttpsMetadata = false;
+                options.Authority = "http://localhost:5001";
+                options.ClientSecret = "super-secret";
+                options.ClientId = "mvc";
+                options.ResponseType = OpenIdConnectResponseType.Code;
+                options.SaveTokens = true;
+                options.Scope.Add("openid");
+                     options.Scope.Add("profile");
+            });
             services.AddAuthorization();
 
-           
-           services.AddRazorPages();
+
+            services.AddRazorPages();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

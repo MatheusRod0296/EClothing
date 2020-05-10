@@ -32,6 +32,50 @@ namespace EclothingAuthServer
         public static IEnumerable<Client> Clients =>
             new Client[]
             {
+
+                new Client
+                {
+                    ClientId = "mvc",
+                    ClientName = "EClothing Web",
+                    AllowedGrantTypes = GrantTypes.Code,
+                    // AllowedAccessTokensViaBrowser = true,
+
+                    RequireConsent = false,
+
+                    RedirectUris = { "https://localhost:5003/signin-oidc"  },
+                    
+                    // PostLogoutRedirectUris = { "https://localhost:5003/signout-callback-oidc" },
+                     ClientSecrets = {new Secret("super-secret".Sha256(),"mvc-secret") },
+                    AllowedScopes =
+                    {
+                        IdentityServerConstants.StandardScopes.OpenId,
+                        IdentityServerConstants.StandardScopes.Profile,
+                        IdentityServerConstants.StandardScopes.Email,
+                        IdentityServerConstants.StandardScopes.Address,
+                        "website"
+                    }
+                }
+
+                //  new Client
+                // {
+                //     ClientId = "mvc",
+                //     ClientName = "EClothing Web",
+                //     AllowedGrantTypes = GrantTypes.Code,
+                //     RequireConsent = false,
+
+                //     RedirectUris = { "https://localhost:5003/signin-oidc"  },
+                //     PostLogoutRedirectUris = { "https://localhost:5003/signout-callback-oidc" },
+                //     ClientSecrets = {new Secret("super-secret".Sha256(),"mvc-secret") },
+                //     AllowedScopes =
+                //     {
+                //         IdentityServerConstants.StandardScopes.OpenId,
+                //         IdentityServerConstants.StandardScopes.Profile,
+                //         IdentityServerConstants.StandardScopes.Email,
+                //         IdentityServerConstants.StandardScopes.Address,
+                //         "website"
+                //     }
+                // }
+
                 // client credentials flow client
                 // new Client
                 // {
@@ -44,25 +88,7 @@ namespace EclothingAuthServer
                 //     AllowedScopes = { "api1" }
                 // },
 
-                 new Client
-                {
-                    ClientId = "mvc",
-                    ClientName = "EClothing Web",
-                    AllowedGrantTypes = GrantTypes.Code,
-                    RequireConsent = false,
-
-                    RedirectUris = { "https://localhost:5003/signin-oidc"  },
-                    PostLogoutRedirectUris = { "https://localhost:5003/signout-callback-oidc" },
-                    ClientSecrets = {new Secret("super-secret".Sha256(),"mvc-secret") },
-                    AllowedScopes =
-                    {
-                        IdentityServerConstants.StandardScopes.OpenId,
-                        IdentityServerConstants.StandardScopes.Profile,
-                        IdentityServerConstants.StandardScopes.Email,
-                        IdentityServerConstants.StandardScopes.Address,
-                        "website"
-                    }
-                }
+                
 
                 // MVC client using code flow + pkce
                 // new Client

@@ -1,8 +1,0 @@
-/home/matheus/Projects/EClothing/EClothing.Domain/bin/Debug/netstandard2.0/EClothing.Domain.deps.json
-/home/matheus/Projects/EClothing/EClothing.Domain/bin/Debug/netstandard2.0/EClothing.Domain.dll
-/home/matheus/Projects/EClothing/EClothing.Domain/bin/Debug/netstandard2.0/EClothing.Domain.pdb
-/home/matheus/Projects/EClothing/EClothing.Domain/obj/Debug/netstandard2.0/EClothing.Domain.csprojAssemblyReference.cache
-/home/matheus/Projects/EClothing/EClothing.Domain/obj/Debug/netstandard2.0/EClothing.Domain.AssemblyInfoInputs.cache
-/home/matheus/Projects/EClothing/EClothing.Domain/obj/Debug/netstandard2.0/EClothing.Domain.AssemblyInfo.cs
-/home/matheus/Projects/EClothing/EClothing.Domain/obj/Debug/netstandard2.0/EClothing.Domain.dll
-/home/matheus/Projects/EClothing/EClothing.Domain/obj/Debug/netstandard2.0/EClothing.Domain.pdb

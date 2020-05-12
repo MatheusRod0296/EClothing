@@ -1,3 +1,4 @@
+using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authorization;
@@ -11,6 +12,7 @@ namespace EClothing.Web.Controllers
     {
         public IActionResult Secure()
         {
+            
             return View();
         }
 

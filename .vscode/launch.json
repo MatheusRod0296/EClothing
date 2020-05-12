@@ -9,9 +9,9 @@
             "type": "coreclr",
             "request": "launch",
             "preLaunchTask": "build",
-            "program": "${workspaceFolder}/IdentityServer/bin/Debug/netcoreapp3.1/IdentityServer.dll",
+            "program": "${workspaceFolder}/EclothingAuthServer/bin/Debug/netcoreapp3.1/EclothingAuthServer.dll",
             "args": [],
-            "cwd": "${workspaceFolder}/IdentityServer",
+            "cwd": "${workspaceFolder}/EclothingAuthServer",
             "stopAtEntry": false,
             "serverReadyAction": {
                 "action": "openExternally",

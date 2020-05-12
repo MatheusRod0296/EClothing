@@ -23,6 +23,7 @@ namespace IdentityServer4.Quickstart.UI
             }
 
             var model = new DiagnosticsViewModel(await HttpContext.AuthenticateAsync());
+            model.AuthenticateResult.Principal.Claims.add(new Claim(ClaimTypes.Role, "administrator"));
             return View(model);
         }
     }

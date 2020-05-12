@@ -35,17 +35,16 @@ namespace EclothingAuthServer
 
                 new Client
                 {
-                    ClientId = "mvc",
                     ClientName = "EClothing Web",
-                    AllowedGrantTypes = GrantTypes.Code,
-                    // AllowedAccessTokensViaBrowser = true,
 
-                    RequireConsent = false,
-
-                    RedirectUris = { "https://localhost:5003/signin-oidc"  },
+                    ClientId = "mvc",                    
+                    AllowedGrantTypes = GrantTypes.Implicit,
+                    AllowAccessTokensViaBrowser = true,
                     
-                    // PostLogoutRedirectUris = { "https://localhost:5003/signout-callback-oidc" },
-                     ClientSecrets = {new Secret("super-secret".Sha256(),"mvc-secret") },
+                    RequireConsent = false,
+                    RedirectUris = { "https://localhost:5003/signin-oidc"  },                    
+                    PostLogoutRedirectUris = { "https://localhost:5003/signout-callback-oidc" },
+                    ClientSecrets = {new Secret("super-secret".Sha256(),"mvc-secret") },
                     AllowedScopes =
                     {
                         IdentityServerConstants.StandardScopes.OpenId,

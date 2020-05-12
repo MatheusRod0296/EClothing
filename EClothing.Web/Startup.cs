@@ -67,12 +67,14 @@ namespace EClothing.Web
             .AddCookie("Cookies")
             .AddOpenIdConnect("oidc", options =>
             {
+                options.ClientId = "mvc";
+                options.ResponseType = OpenIdConnectResponseType.IdTokenToken;
                 options.SignInScheme = "Cookies";
                 options.RequireHttpsMetadata = false;
                 options.Authority = "http://localhost:5001";
                 options.ClientSecret = "super-secret";
-                options.ClientId = "mvc";
-                options.ResponseType = OpenIdConnectResponseType.Code;
+                
+                
                 options.SaveTokens = true;
                 options.Scope.Add("openid");
                      options.Scope.Add("profile");

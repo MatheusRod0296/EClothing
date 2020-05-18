@@ -9,9 +9,10 @@
             "type": "coreclr",
             "request": "launch",
             "preLaunchTask": "build",
-            "program": "${workspaceFolder}/EclothingAuthServer/bin/Debug/netcoreapp3.1/EclothingAuthServer.dll",
+            "requireExactSource": false,
+            "program": "${workspaceFolder}/EClothing.Auth/bin/Debug/netcoreapp3.1/EClothing.Auth.dll",
             "args": [],
-            "cwd": "${workspaceFolder}/EclothingAuthServer",
+            "cwd": "${workspaceFolder}/EClothing.Auth",
             "stopAtEntry": false,
             "serverReadyAction": {
                 "action": "openExternally",

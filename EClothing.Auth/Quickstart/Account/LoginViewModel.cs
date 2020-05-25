@@ -5,6 +5,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using EClothing.Auth.Models.ViewModels;
 
 namespace IdentityServer4.Quickstart.UI
 {
@@ -18,5 +19,6 @@ namespace IdentityServer4.Quickstart.UI
 
         public bool IsExternalLoginOnly => EnableLocalLogin == false && ExternalProviders?.Count() == 1;
         public string ExternalLoginScheme => IsExternalLoginOnly ? ExternalProviders?.SingleOrDefault()?.AuthenticationScheme : null;
+
     }
 }

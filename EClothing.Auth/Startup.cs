@@ -16,6 +16,7 @@ using System.Reflection;
 using System.Linq;
 using IdentityServer4.EntityFramework.DbContexts;
 using IdentityServer4.EntityFramework.Mappers;
+using System;
 
 namespace EClothing.Auth
 {
@@ -57,9 +58,14 @@ namespace EClothing.Auth
             services.AddDbContext<ApplicationDbContext>(options =>
                  options.UseSqlServer(connectionString));
 
-            services.AddIdentity<ApplicationUser, IdentityRole>()
+            services.AddIdentity<ApplicationUser, IdentityRole>(options => {
+                options.Lockout.AllowedForNewUsers = true;
+                options.Lockout.DefaultLockoutTimeSpan = TimeSpan.FromMinutes(5);
+                options.Lockout.MaxFailedAccessAttempts = 5;
+            })
                 .AddEntityFrameworkStores<ApplicationDbContext>()
                 .AddDefaultTokenProviders();
+                
 
             var builder = services.AddIdentityServer(options =>
                 {
@@ -126,10 +132,11 @@ namespace EClothing.Auth
                 {
                     foreach (var client in Config.Clients)
                     {
-                        if(client.ClientName == "EClothing Web"){
-                             context.Clients.Add(client.ToEntity());
+                        if (client.ClientName == "EClothing Web")
+                        {
+                            context.Clients.Add(client.ToEntity());
                         }
-                        
+
                     }
                     context.SaveChanges();
                 }
@@ -157,5 +164,7 @@ namespace EClothing.Auth
                 }
             }
         }
+
+        
     }
 }

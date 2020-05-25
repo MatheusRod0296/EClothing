@@ -17,6 +17,7 @@ using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Linq;
 using System.Threading.Tasks;
+using EClothing.Auth.Models.ViewModels;
 
 namespace IdentityServer4.Quickstart.UI
 {
@@ -53,6 +54,7 @@ namespace IdentityServer4.Quickstart.UI
         [HttpGet]
         public async Task<IActionResult> Login(string returnUrl)
         {
+           
             // build a model so we know what to show on the login page
             var vm = await BuildLoginViewModelAsync(returnUrl);
 
@@ -72,6 +74,7 @@ namespace IdentityServer4.Quickstart.UI
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Login(LoginInputModel model, string button)
         {
+            
             // check if we are in the context of an authorization request
             var context = await _interaction.GetAuthorizationContextAsync(model.ReturnUrl);
 
@@ -147,8 +150,41 @@ namespace IdentityServer4.Quickstart.UI
             var vm = await BuildLoginViewModelAsync(model);
             return View(vm);
         }
-
         
+
+        [HttpGet]
+        public async Task<IActionResult> Register(string returnUrl)
+        {
+            ViewData["ReturnURL"] = returnUrl;
+            return View();
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Register(RegisterViewModel model, string button){
+            
+
+            if(ModelState.IsValid){
+               var user = new ApplicationUser{
+                   UserName = model.Name,
+                   Email = model.Email
+               };              
+
+               var result = await _userManager.CreateAsync(user, model.Password);
+               
+               if(result.Succeeded){
+                return await Login(
+                       new LoginInputModel {
+                        Username = model.Name,
+                        Password = model.Password,
+                        ReturnUrl = model.ReturnUrl},"login" );
+               }
+            }
+                return View(model);
+            
+            
+           
+        }
         /// <summary>
         /// Show logout page
         /// </summary>

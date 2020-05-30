@@ -107,6 +107,9 @@ namespace IdentityServer4.Quickstart.UI
 
             if (ModelState.IsValid)
             {
+                //TODO: alterar para fazer login por email
+                //var user = await _userManager.FindByEmailAsync(model.Username);
+
                 var result = await _signInManager.PasswordSignInAsync(model.Username, model.Password, model.RememberLogin, lockoutOnFailure: true);
                 if (result.Succeeded)
                 {
@@ -224,6 +227,7 @@ namespace IdentityServer4.Quickstart.UI
             }
 
             // check if we need to trigger sign-out at an upstream identity provider
+            
             if (vm.TriggerExternalSignout)
             {
                 // build a return URL so the upstream provider will redirect back

@@ -62,6 +62,7 @@ namespace EClothing.Auth
                 options.Lockout.AllowedForNewUsers = true;
                 options.Lockout.DefaultLockoutTimeSpan = TimeSpan.FromMinutes(5);
                 options.Lockout.MaxFailedAccessAttempts = 5;
+                options.User.RequireUniqueEmail = true;
             })
                 .AddEntityFrameworkStores<ApplicationDbContext>()
                 .AddDefaultTokenProviders();
@@ -95,8 +96,8 @@ namespace EClothing.Auth
                     // register your IdentityServer with Google at https://console.developers.google.com
                     // enable the Google+ API
                     // set the redirect URI to http://localhost:5000/signin-google
-                    options.ClientId = "";
-                    options.ClientSecret = "";
+                    options.ClientId = "231557905936-40qqh7s2vchtfn6f453m7v6ao4ruresd.apps.googleusercontent.com";
+                    options.ClientSecret = "bUI091QUCBnLIpV-n3LKiZCF";
 
                     options.SaveTokens = true;
                 });

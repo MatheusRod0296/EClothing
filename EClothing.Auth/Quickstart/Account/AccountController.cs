@@ -107,13 +107,10 @@ namespace IdentityServer4.Quickstart.UI
 
             if (ModelState.IsValid)
             {
-                //TODO: alterar para fazer login por email
-                //var user = await _userManager.FindByEmailAsync(model.Username);
-
-                var result = await _signInManager.PasswordSignInAsync(model.Username, model.Password, model.RememberLogin, lockoutOnFailure: true);
+                var result = await _signInManager.PasswordSignInAsync(model.EmailAdress, model.Password, model.RememberLogin, lockoutOnFailure: true);
                 if (result.Succeeded)
                 {
-                    var user = await _userManager.FindByNameAsync(model.Username);
+                    var user = await _userManager.FindByEmailAsync(model.EmailAdress);
                     await _events.RaiseAsync(new UserLoginSuccessEvent(user.UserName, user.Id, user.UserName, clientId: context?.ClientId));
 
                     if (context != null)
@@ -169,8 +166,9 @@ namespace IdentityServer4.Quickstart.UI
 
             if(ModelState.IsValid){
                var user = new ApplicationUser{
-                   UserName = model.Name,
-                   Email = model.Email
+                   UserName = model.Email,
+                   Email = model.Email,
+
                };              
 
                var result = await _userManager.CreateAsync(user, model.Password);
@@ -179,6 +177,7 @@ namespace IdentityServer4.Quickstart.UI
                 return await Login(
                        new LoginInputModel {
                         Username = model.Name,
+                        EmailAdress  = model.Email,
                         Password = model.Password,
                         ReturnUrl = model.ReturnUrl},"login" );
                }
@@ -315,7 +314,7 @@ namespace IdentityServer4.Quickstart.UI
         private async Task<LoginViewModel> BuildLoginViewModelAsync(LoginInputModel model)
         {
             var vm = await BuildLoginViewModelAsync(model.ReturnUrl);
-            vm.Username = model.Username;
+            vm.EmailAdress = model.EmailAdress;
             vm.RememberLogin = model.RememberLogin;
             return vm;
         }

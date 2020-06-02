@@ -297,9 +297,15 @@ namespace IdentityServer4.Quickstart.UI
             // if the external system sent a session id claim, copy it over
             // so we can use it for single sign-out
             var sid = externalResult.Principal.Claims.FirstOrDefault(x => x.Type == JwtClaimTypes.SessionId);
+            var nome = externalResult.Principal.Claims.FirstOrDefault(x => x.Type == JwtClaimTypes.GivenName);
             if (sid != null)
             {
                 localClaims.Add(new Claim(JwtClaimTypes.SessionId, sid.Value));
+            }
+
+            if (nome != null)
+            {
+                localClaims.Add(new Claim(JwtClaimTypes.GivenName, nome.Value));
             }
 
             // if the external provider issued an id_token, we'll keep it for signout

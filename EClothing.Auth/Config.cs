@@ -27,7 +27,7 @@ namespace EClothing.Auth
         public static IEnumerable<ApiResource> Apis =>
             new ApiResource[]
             {
-                new ApiResource("api1", "My API #1")
+                new ApiResource("api1", "My API #1", new[] { JwtClaimTypes.Subject, JwtClaimTypes.Email, JwtClaimTypes.GivenName })
             };
 
 

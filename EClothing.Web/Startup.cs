@@ -78,7 +78,10 @@ namespace EClothing.Web
                 
                 options.SaveTokens = true;
                 options.Scope.Add("openid");
-                     options.Scope.Add("profile");
+                options.Scope.Add("profile");
+               
+                
+                
             });
             services.AddAuthorization();
 

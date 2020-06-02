@@ -13,6 +13,8 @@ namespace EClothing.Web.Controllers
         public IActionResult Secure()
         {
             
+            var x = User;
+            var context = HttpContext;
             return View();
         }
 

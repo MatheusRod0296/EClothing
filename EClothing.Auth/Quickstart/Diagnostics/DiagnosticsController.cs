@@ -21,7 +21,8 @@ namespace IdentityServer4.Quickstart.UI
             {
                 return NotFound();
             }
-
+            
+            var x = HttpContext.AuthenticateAsync();
             var model = new DiagnosticsViewModel(await HttpContext.AuthenticateAsync());
             return View(model);
         }

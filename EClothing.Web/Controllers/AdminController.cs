@@ -1,3 +1,4 @@
+using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authentication;
@@ -10,11 +11,16 @@ namespace EClothing.Web.Controllers
     [Authorize]
     public class AdminController : Controller
     {
+         [Authorize(Roles = "Costumer")]
         public IActionResult Secure()
         {
             
             var x = User;
             var context = HttpContext;
+            var accessToken =  HttpContext.GetTokenAsync("access_token").Result;
+            var xxx  = new JwtSecurityTokenHandler().ReadToken(accessToken);
+           
+           
             return View();
         }
 

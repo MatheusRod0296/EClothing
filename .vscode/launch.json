@@ -10,9 +10,9 @@
             "request": "launch",
             "preLaunchTask": "build",
             "requireExactSource": false,
-            "program": "${workspaceFolder}/EClothing.Auth/bin/Debug/netcoreapp3.1/EClothing.Auth.dll",
+            "program": "${workspaceFolder}/EClothing.Web/bin/Debug/netcoreapp3.1/EClothing.Web.dll",
             "args": [],
-            "cwd": "${workspaceFolder}/EClothing.Auth",
+            "cwd": "${workspaceFolder}/EClothing.Web",
             "stopAtEntry": false,
             "serverReadyAction": {
                 "action": "openExternally",

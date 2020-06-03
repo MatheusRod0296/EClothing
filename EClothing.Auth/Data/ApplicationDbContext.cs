@@ -15,7 +15,7 @@ namespace EClothing.Auth.Data
             : base(options)
         {
             Configuration = configuration;
-            
+
         }
 
         protected override void OnModelCreating(ModelBuilder builder)
@@ -25,6 +25,7 @@ namespace EClothing.Auth.Data
             // For example, you can rename the ASP.NET Identity table names and more.
             // Add your customizations after calling base.OnModelCreating(builder);
             builder.Entity<IdentityUserClaim<int>>().Property(c => c.Id).UseSqlServerIdentityColumn();
+            
 
         }
 

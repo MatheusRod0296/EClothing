@@ -20,17 +20,18 @@ namespace EClothing.Auth.Models
         {
             //>Processing
             var user = await _userManager.GetUserAsync(context.Subject);
+            var claims = await _userManager.GetClaimsAsync(user);
 
-            var claims = new List<Claim>{
-             new Claim("FullName", user.UserName),
-             new Claim("email", user.UserName),
-             new Claim("givenname", user.UserName),
-             new Claim("name", user.UserName),
+            // var claims = new List<Claim>{
+            //  new Claim("FullName", user.UserName),
+            //  new Claim("email", user),
+            //  new Claim("givenname", user.UserName),
+            //  new Claim("name", user.UserName),
             
-            };
+            // };
 
             context.IssuedClaims.AddRange(claims);
-            
+           
             
         }
 

@@ -16,12 +16,14 @@ using EClothing.Infra;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authentication.OpenIdConnect;
 using Microsoft.IdentityModel.Protocols.OpenIdConnect;
+using Microsoft.AspNetCore.Authentication;
+using Microsoft.IdentityModel.Tokens;
 
 namespace EClothing.Web
 {
     public class Startup
     {
-        
+
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
@@ -63,7 +65,7 @@ namespace EClothing.Web
             {
                 options.DefaultScheme = "Cookies";
                 options.DefaultChallengeScheme = "oidc";
-               
+
             })
             .AddCookie("Cookies")
             .AddOpenIdConnect("oidc", options =>
@@ -74,14 +76,23 @@ namespace EClothing.Web
                 options.RequireHttpsMetadata = false;
                 options.Authority = "http://localhost:5001";
                 options.ClientSecret = "super-secret";
-                
-                
+
                 options.SaveTokens = true;
+                options.GetClaimsFromUserInfoEndpoint = true;
+
+
                 options.Scope.Add("openid");
                 options.Scope.Add("profile");
-               
-                
-                
+                options.Scope.Add("roles");
+                options.ClaimActions.MapUniqueJsonKey("role", "role");
+
+                options.TokenValidationParameters = new TokenValidationParameters
+                {
+                    RoleClaimType = "role"
+                };
+
+
+
             });
             services.AddAuthorization();
 

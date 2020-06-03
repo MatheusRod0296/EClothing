@@ -11,6 +11,7 @@ using IdentityServer4.Test;
 
 using IdentityServer4.Models;
 using System.Collections.Generic;
+using System.Security.Claims;
 
 namespace EClothing.Auth
 {
@@ -21,13 +22,26 @@ namespace EClothing.Auth
             {
                 new IdentityResources.OpenId(),
                 new IdentityResources.Profile(),
+                new IdentityResource("roles", "User role(s)", new List<string> { "role" })
+                
             };
 
 
         public static IEnumerable<ApiResource> Apis =>
             new ApiResource[]
             {
-                new ApiResource("api1", "My API #1", new[] { JwtClaimTypes.Subject, JwtClaimTypes.Email, JwtClaimTypes.GivenName })
+                new ApiResource("api1", "My API #1") {
+                    UserClaims =
+                    {
+                        JwtClaimTypes.Name,
+                        JwtClaimTypes.Email,
+                        JwtClaimTypes.GivenName,
+                        ClaimTypes.Role
+                                               
+                    },
+                    
+
+            }
             };
 
 
@@ -63,7 +77,7 @@ namespace EClothing.Auth
                     PostLogoutRedirectUris = { "http://localhost:5003/signout-callback-oidc" },
 
                     AllowOfflineAccess = true,
-                    AllowedScopes = { "openid", "profile", "api1" }
+                    AllowedScopes = { "openid", "profile", "api1", "roles" }
                 },
 
                 // SPA client using code flow + pkce
@@ -93,12 +107,12 @@ namespace EClothing.Auth
                  new Client
                 {
                     ClientName = "EClothing Web",
-                    ClientId = "mvc",                    
+                    ClientId = "mvc",
                     AllowedGrantTypes = GrantTypes.Implicit,
                     AllowAccessTokensViaBrowser = true,
-                    
+
                     RequireConsent = false,
-                    RedirectUris = { "https://localhost:5003/signin-oidc"  },                    
+                    RedirectUris = { "https://localhost:5003/signin-oidc"  },
                     PostLogoutRedirectUris = { "https://localhost:5003/signout-callback-oidc" },
                     ClientSecrets = {new Secret("super-secret".Sha256(),"mvc-secret") },
                     AllowedScopes =

@@ -23,14 +23,15 @@ namespace EClothing.Auth
     public class Startup
     {
 
+        public Startup(IWebHostEnvironment environment, IConfiguration configuration)
+        {
+            this.Environment = environment;
+            this.Configuration = configuration;
+
+        }
         public IWebHostEnvironment Environment { get; }
         public IConfiguration Configuration { get; }
 
-        public Startup(IWebHostEnvironment environment, IConfiguration configuration)
-        {
-            Environment = environment;
-            Configuration = configuration;
-        }
 
         public void ConfigureServices(IServiceCollection services)
         {
@@ -58,15 +59,24 @@ namespace EClothing.Auth
             services.AddDbContext<ApplicationDbContext>(options =>
                  options.UseSqlServer(connectionString));
 
-            services.AddIdentity<ApplicationUser, IdentityRole>(options => {
+
+
+            services.AddIdentity<ApplicationUser, IdentityRole>(options =>
+            {
                 options.Lockout.AllowedForNewUsers = true;
                 options.Lockout.DefaultLockoutTimeSpan = TimeSpan.FromMinutes(5);
                 options.Lockout.MaxFailedAccessAttempts = 5;
                 options.User.RequireUniqueEmail = true;
             })
                 .AddEntityFrameworkStores<ApplicationDbContext>()
-                .AddDefaultTokenProviders();
+                .AddRoles<IdentityRole>()
+                .AddDefaultTokenProviders()
+                ;           
                 
+            // var builder = services.AddIdentityServer()
+            //     .AddInMemoryIdentityResources(Config.Ids)
+            //     .AddInMemoryApiResources(Config.Apis)
+            //     .AddInMemoryClients(Config.Clients);
 
             var builder = services.AddIdentityServer(options =>
                 {
@@ -102,6 +112,8 @@ namespace EClothing.Auth
 
                     options.SaveTokens = true;
                 });
+
+
         }
 
         public void Configure(IApplicationBuilder app)
@@ -126,6 +138,8 @@ namespace EClothing.Auth
 
         private void InitializeDatabase(IApplicationBuilder app)
         {
+           
+
             using (var serviceScope = app.ApplicationServices.GetService<IServiceScopeFactory>().CreateScope())
             {
                 serviceScope.ServiceProvider.GetRequiredService<PersistedGrantDbContext>().Database.Migrate();
@@ -149,6 +163,7 @@ namespace EClothing.Auth
                 // context.Clients.Add(client.ToEntity());
                 // context.SaveChanges();
 
+
                 if (!context.IdentityResources.Any())
                 {
                     foreach (var resource in Config.Ids)
@@ -169,6 +184,6 @@ namespace EClothing.Auth
             }
         }
 
-        
+
     }
 }

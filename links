@@ -2,3 +2,7 @@ identity: https://www.brunobrito.net.br/aspnet-core-identityserver4/
 https://www.youtube.com/watch?v=Brruo1SLtL0&t=3s
 https://www.youtube.com/watch?v=G23-d9K7SKs
 https://www.brunobrito.net.br/jwt-cookies-oauth-bearer/
+
+autorização
+https://stackoverflow.com/questions/44761058/how-to-add-custom-claims-to-access-token-in-identityserver4
+https://code-maze.com/identityserver4-authorization/

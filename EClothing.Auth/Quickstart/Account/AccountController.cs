@@ -18,6 +18,8 @@ using System;
 using System.Linq;
 using System.Threading.Tasks;
 using EClothing.Auth.Models.ViewModels;
+using System.Collections.Generic;
+using System.Security.Claims;
 
 namespace IdentityServer4.Quickstart.UI
 {
@@ -168,10 +170,18 @@ namespace IdentityServer4.Quickstart.UI
                var user = new ApplicationUser{
                    UserName = model.Email,
                    Email = model.Email,
+                   
 
                };              
-
+            
                var result = await _userManager.CreateAsync(user, model.Password);
+
+                var c = new List<Claim>();
+                c.Add(new Claim(JwtClaimTypes.Role, "Costumer"));
+                c.Add(new Claim(JwtClaimTypes.Email, user.Email));
+    
+               await _userManager.AddClaimsAsync(user, c);
+               
                
                if(result.Succeeded){
                 return await Login(

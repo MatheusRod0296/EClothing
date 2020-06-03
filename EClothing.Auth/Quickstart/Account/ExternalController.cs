@@ -15,6 +15,8 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using EClothing.Auth.Data;
 
 namespace IdentityServer4.Quickstart.UI
 {
@@ -29,13 +31,17 @@ namespace IdentityServer4.Quickstart.UI
         private readonly IEventService _events;
         private readonly ILogger<ExternalController> _logger;
 
+       
+        private readonly RoleManager<IdentityRole> _roleManager;
+
         public ExternalController(
             UserManager<ApplicationUser> userManager,
             SignInManager<ApplicationUser> signInManager,
             IIdentityServerInteractionService interaction,
             IClientStore clientStore,
             IEventService events,
-            ILogger<ExternalController> logger)
+            ILogger<ExternalController> logger,
+            RoleManager<IdentityRole> roleManager)
         {
             _userManager = userManager;
             _signInManager = signInManager;
@@ -43,6 +49,8 @@ namespace IdentityServer4.Quickstart.UI
             _clientStore = clientStore;
             _events = events;
             _logger = logger;
+            _roleManager = roleManager;
+            
         }
 
         /// <summary>
@@ -271,6 +279,7 @@ namespace IdentityServer4.Quickstart.UI
             if (email != null)
             {
                 filtered.Add(new Claim(JwtClaimTypes.Email, email));
+                filtered.Add(new Claim(JwtClaimTypes.Role, "Costumer"));
                 user.UserName = email;
                 user.Email = email;
             }else
@@ -279,11 +288,25 @@ namespace IdentityServer4.Quickstart.UI
             var identityResult = await _userManager.CreateAsync(user);
             if (!identityResult.Succeeded) throw new Exception(identityResult.Errors.First().Description);
 
+                      
+
             if (filtered.Any())
             {
                 identityResult = await _userManager.AddClaimsAsync(user, filtered);
                 if (!identityResult.Succeeded) throw new Exception(identityResult.Errors.First().Description);
             }
+
+           
+
+            
+            // var IdentityRole = new IdentityRole();
+            // IdentityRole.Id = "3a3dfdc9-449e-4edc-8a0a-24a06d6c4d82";
+            // IdentityRole.Name = "costumer";
+            // IdentityRole.NormalizedName = "COSTUMER";
+
+            // var err = await _roleManager.CreateAsync(IdentityRole);
+
+            //var x = await _userManager.AddToRoleAsync(user, "costumer" );
 
             identityResult = await _userManager.AddLoginAsync(user, new UserLoginInfo(provider, providerUserId, provider));
             if (!identityResult.Succeeded) throw new Exception(identityResult.Errors.First().Description);
